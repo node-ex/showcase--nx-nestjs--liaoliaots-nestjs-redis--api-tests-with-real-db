@@ -5,11 +5,14 @@
 1. Install dependencies using `pnpm install`
 2. Copy `.env.template` as `.env` and add/change values if needed
 3. Start the infra and run migrations using `./scripts/docker-infra-run.sh`
-2. Run the tests using `pnpm exec nx test app-nest-1`
-3. Troubleshoot tests using the following command
+4. Run the tests using `pnpm exec nx test app-nest-1`
+5. Troubleshoot tests using the following command
 
 ```bash
-npx nx reset && DEBUG=jest-redis:* pnpm exec nx test app-nest-1 --verbose -- --detectOpenHandles
+npx nx reset && pnpm exec nx test app-nest-1
+
+# With debug output and other useful flags
+npx nx reset && DEBUG=jest-redis:* pnpm exec nx test app-nest-1 --verbose -- --detectOpenHandles --maxWorkers=1
 ```
 
 ## Local development

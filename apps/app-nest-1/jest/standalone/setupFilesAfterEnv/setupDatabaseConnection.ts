@@ -8,8 +8,7 @@ const debug = _debug('jest-redis:setupFilesAfterEnv:setupDatabaseConnection');
 beforeAll(async () => {
   /**
    * Create a new NestJS application with the RedisModule that uses
-   * the connection string from the environment variable set in the
-   * testEnvironment.ts file.
+   * the environment variables set in the testEnvironment.ts file.
    */
   const app = await Test.createTestingModule({
     imports: [RedisModule],
@@ -17,7 +16,7 @@ beforeAll(async () => {
 
   const redisService = app.get<RedisService>(RedisService);
   const redis = redisService.getOrThrow(DEFAULT_REDIS);
-  globalThis.__IOREDIS_CONNECTION__ = redis;
+  globalThis.__IOREDIS_CONNECTION_TEST_KEY_PREFIX__ = redis;
 
   debug("process.env['REDIS_KEY_PREFIX']", process.env['REDIS_KEY_PREFIX']);
 });
@@ -25,7 +24,7 @@ beforeAll(async () => {
 afterEach(async () => {
   debug('deleting all keys with a specific prefix');
 
-  const redis = globalThis.__IOREDIS_CONNECTION__;
+  const redis = globalThis.__IOREDIS_CONNECTION_TEST_KEY_PREFIX__;
   const pattern = process.env['REDIS_KEY_PREFIX']! + '*';
   let cursor = '0';
   do {
@@ -60,5 +59,5 @@ afterEach(async () => {
 });
 
 afterAll(() => {
-  globalThis.__IOREDIS_CONNECTION__.disconnect();
+  globalThis.__IOREDIS_CONNECTION_TEST_KEY_PREFIX__.disconnect();
 });

@@ -9,16 +9,16 @@ describe('Index', () => {
     debug("process.env['REDIS_KEY_PREFIX']", process.env['REDIS_KEY_PREFIX']);
     debug("process.env['REDIS_PASSWORD']", process.env['REDIS_PASSWORD']);
 
-    await globalThis.__IOREDIS_CONNECTION__.set('test1', 'test');
-    const keyNames = await globalThis.__IOREDIS_CONNECTION__.keys('*');
+    await globalThis.__IOREDIS_CONNECTION_TEST_KEY_PREFIX__.set('test1', 'test');
+    const keyNames = await globalThis.__IOREDIS_CONNECTION_TEST_KEY_PREFIX__.keys('*');
     debug('test1 keyNames', keyNames);
 
     expect(true).toBe(true);
   });
 
   it('test2', async () => {
-    await globalThis.__IOREDIS_CONNECTION__.set('test2', 'test');
-    const keyNames = await globalThis.__IOREDIS_CONNECTION__.keys('*');
+    await globalThis.__IOREDIS_CONNECTION_TEST_KEY_PREFIX__.set('test2', 'test');
+    const keyNames = await globalThis.__IOREDIS_CONNECTION_TEST_KEY_PREFIX__.keys('*');
     debug('test2 keyNames', keyNames);
 
     expect(true).toBe(true);
